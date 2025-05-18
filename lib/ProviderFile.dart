@@ -31,6 +31,7 @@ class ProviderFile with ChangeNotifier{
   Map<String, dynamic> get rates => _rates;
   bool get isLoading => _isLoading;
 
+
   Future<void> loadRates() async {
     print("Load Rates");
     _isLoading = true;
