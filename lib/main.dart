@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:live_currency_api_project/ProviderFile.dart';
-import 'package:live_currency_api_project/UI/homeScreen.dart';
+import 'package:live_currency_api_project/UI/splashScreen.dart';
 import 'package:provider/provider.dart';
 
 void main() {
@@ -21,7 +21,7 @@ class MyApp extends StatelessWidget {
           primarySwatch: Colors.blue,
           useMaterial3: true,
         ),
-        home: const homeScreen(),
+        home: const splashScreen(),
       ),
     );
   }

@@ -11,7 +11,7 @@ class splashScreen extends StatefulWidget {
 class _splashScreenState extends State<splashScreen> {
 
   Future<void> movingScreen() async{
-    await Future.delayed(Duration(seconds: 3));
+    await Future.delayed(Duration(seconds: 7));
     Navigator.pushReplacement(context, MaterialPageRoute(builder: (context) => homeScreen()));
   }
 
@@ -23,9 +23,15 @@ class _splashScreenState extends State<splashScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        backgroundColor: Colors.blue,
-        title: Text("Splash Screen"),
+      body: SafeArea(
+        child: Container(
+          width: double.infinity,
+          height: double.infinity,
+          decoration: BoxDecoration(
+            borderRadius: BorderRadius.circular(10)
+          ),
+          child: Image.asset('assets/images/splashScreen.gif', width: double.infinity, height: double.infinity, fit: BoxFit.fill,),
+        ),
       ),
     );
   }
