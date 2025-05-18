@@ -1,6 +1,6 @@
-import 'dart:convert';
 import 'package:flutter/material.dart';
-import 'package:http/http.dart' as http;
+import 'package:live_currency_api_project/ProviderFile.dart';
+import 'package:provider/provider.dart';
 
 class homeScreen extends StatefulWidget {
   const homeScreen({super.key});
@@ -10,33 +10,12 @@ class homeScreen extends StatefulWidget {
 }
 
 class _homeScreenState extends State<homeScreen> {
-  Map<String, dynamic> exchangeRates = {};
-  bool isLoading = true;
-
   @override
   void initState() {
     super.initState();
-    fetchExchangeRates();
-  }
-
-  Future<void> fetchExchangeRates() async {
-    final url = Uri.parse('https://api.exchangerate-api.com/v4/latest/USD');
-
-    try {
-      final response = await http.get(url);
-
-      if (response.statusCode == 200) {
-        final data = json.decode(response.body);
-        setState(() {
-          exchangeRates = data['rates'];
-          isLoading = false;
-        });
-      } else {
-        throw Exception('Failed to load exchange rates');
-      }
-    } catch (e) {
-      print('Error: $e');
-    }
+    WidgetsBinding.instance.addPostFrameCallback((_) {
+      Provider.of<ProviderFile>(context, listen: false).loadRates();
+    });
   }
 
   @override
@@ -44,33 +23,33 @@ class _homeScreenState extends State<homeScreen> {
     return Scaffold(
       appBar: AppBar(
         backgroundColor: Colors.blue,
-        title: Text(
+        title: const Text(
           "Live Currency",
           style: TextStyle(fontWeight: FontWeight.bold, color: Colors.white),
         ),
         centerTitle: true,
       ),
-      body: Column(
-        children: [
-          Expanded(
-            child: ListView(
-              children: [
-                ListTile(
-                  title: Text('PKR'),
-                  subtitle: Text("Rate: ${exchangeRates['PKR']}"),
-                ),
-                ListTile(
-                  title: Text('INR'),
-                  subtitle: Text("Rate: ${exchangeRates['INR']}"),
-                ),
-                ListTile(
-                  title: Text('EUR'),
-                  subtitle: Text("Rate: ${exchangeRates['EUR']}"),
-                ),
-              ],
-            ),
-          ),
-        ],
+      body: Consumer<ProviderFile>(
+        builder: (context, provider, child) {
+          if (provider.isLoading) {
+            return const Center(child: CircularProgressIndicator());
+          } else if (provider.rates.isEmpty) {
+            return const Center(child: Text("No data available"));
+          } else {
+            return ListView.builder(
+              itemCount: provider.rates.length,
+              itemBuilder: (context, index) {
+                final key = provider.rates.keys.elementAt(index);
+                final value = provider.rates[key];
+                return ListTile(
+                  title: Text(key),
+                  subtitle: Text(value.toString()),
+                  trailing: Text("USD 1 = $key ${value.toString()}"),
+                );
+              },
+            );
+          }
+        },
       ),
     );
   }
