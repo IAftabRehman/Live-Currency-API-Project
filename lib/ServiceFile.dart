@@ -3,8 +3,8 @@ import 'package:http/http.dart' as http;
 import 'package:live_currency_api_project/ModelFile.dart';
 
 class ServiceFile {
-  Future<ModelFile> fetchRates() async {
-    final url = Uri.parse('https://api.exchangerate-api.com/v4/latest/USD');
+  Future<ModelFile> fetchRates(String BaseCurrency) async {
+    final url = Uri.parse('https://api.exchangerate-api.com/v4/latest/${BaseCurrency}');
 
     final response = await http.get(url);
 
