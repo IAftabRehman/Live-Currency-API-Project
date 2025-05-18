@@ -1,7 +1,7 @@
 <h1 align="center">💱 Live Currency API Project – Real-Time Currency Converter</h1>
 
 <p align="center">
-  🔄 <strong>Flutter-based Currency Converter</strong> with Real-Time Exchange Rate API Integration
+  🔄 <strong>Flutter-based Currency Details</strong> with Real-Time Exchange Rate API Integration
 </p>
 
 ---
@@ -18,7 +18,6 @@ With features like **base/target currency selection**, **instant conversion**, a
 
 ### 🧰 Features
 
-- 💱 **Currency Converter** – Enter an amount and instantly convert it.
 - 🌍 **Supports 150+ Currencies** – Convert between all major world currencies.
 - 📶 **Live Exchange Rates** – Real-time data fetched from [ExchangeRate-API](https://www.exchangerate-api.com/).
 - 🔽 **Dropdown Currency Selectors** – Easily pick base and target currencies.
